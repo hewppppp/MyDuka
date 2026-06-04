@@ -42,10 +42,50 @@ def insert_sales(values):
     conn.commit()
 
 
-stock_one = (1,50,"2026-04-23")
+stock_one = (1,50,"2025-09-20")
 insert_stock(stock_one)
 
-sale_one = (1, 50, "2025-09-20")
+sale_one = (1, 50,"2026-01-20")
 insert_sales(sale_one)
 
 get_stock()
+
+def sales_per_day():
+    curr.execute("""
+        select date(sales.created_at) as date, sum(sales.quantity * products.buying_price) as total_sales 
+        from sales join products on products.id = sales.pid 
+        group by date;
+    """)
+    daily_sales = curr.fetchall()
+    return daily_sales
+
+
+def profit_per_day():
+    curr.execute("""
+        select date(sales.created_at) as date, sum(sales.quantity * (products.selling_price - products.buying_price)) as profit 
+        from products join sales on sales.pid = products.id 
+        group by date;
+    """)
+    daily_profit = curr.fetchall()
+    return daily_profit
+
+
+def sales_per_product():
+    curr.execute("""
+        select products.name as p_name, sum(sales.quantity * products.buying_price) as total_sales 
+        from sales join products on products.id = sales.pid 
+        group by p_name;
+    """)
+    product_sales = curr.fetchall()
+    return product_sales
+
+
+def profit_per_product():
+    curr.execute("""
+        select products.name as p_name, sum(sales.quantity * (products.selling_price - products.buying_price)) as profit 
+        from products join sales on sales.pid = products.id 
+        group by p_name;
+    """)
+    product_profit = curr.fetchall()
+    return product_profit
+
