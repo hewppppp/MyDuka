@@ -31,7 +31,18 @@ insert_products2(product3)
 def get_stock():
     curr.execute("Select * from stock")
     stock_data = curr.fetchall()
-    print(stock_data)
+    return stock_data
+
+def get_products():
+    curr.execute("Select * from products")
+    products_data = curr.fetchall()
+    return products_data
+
+def get_data(table):
+    curr.execute(f"select * from {table}")
+    data = curr.fetchall()
+    return data
+
 
 def insert_stock(values):
     curr.execute("insert into stock(pid,stock_quantity,created_at) values(%s,%s,%s)",values)
@@ -49,6 +60,8 @@ sale_one = (1, 50,"2026-01-20")
 insert_sales(sale_one)
 
 get_stock()
+
+get_products()
 
 def sales_per_day():
     curr.execute("""

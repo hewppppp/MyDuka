@@ -25,7 +25,8 @@ class Student:
         print(f"Name:{self.name} - Age: {self.age} - S-NO {self.student_no} - Course :{self.course}")
         print("--------------------------------------------------------------")
 
-#object one
+
+
 student1 = Student("Hope",19,"S345","Information Tech")  
 print(type(student1)) 
 print(student1.name) 
