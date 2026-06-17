@@ -21,6 +21,10 @@ product2 = ('LG Microwave', 50000,60000)
 #insert_products(product1)
 #insert_products(product2)
 
+def insert_products(values):
+    curr.execute("insert into products(name, buying_price,selling_price)values(%s,%s,%s)", values)
+    conn.commit()
+
 def insert_products2(values):
     curr.execute("insert into products(name, buying_price,selling_price)values(%s,%s,%s)", values)
     conn.commit()
@@ -37,6 +41,12 @@ def get_products():
     curr.execute("Select * from products")
     products_data = curr.fetchall()
     return products_data
+
+def get_sales():
+    curr.execute("Select * from sales")
+    sales_data = curr.fetchall()
+    return sales_data
+
 
 def get_data(table):
     curr.execute(f"select * from {table}")
@@ -62,6 +72,10 @@ insert_sales(sale_one)
 get_stock()
 
 get_products()
+
+get_sales()
+
+get_stock()
 
 def sales_per_day():
     curr.execute("""
@@ -101,4 +115,23 @@ def profit_per_product():
     """)
     product_profit = curr.fetchall()
     return product_profit
+
+def check_available_stock(pid):
+    curr.execute("select sum(stock.stock_quantity) from stock where pid = %s",(pid))
+    total_stock = curr.fetchone()[0] or 0
+
+    curr.execute("select sum(sales.quantity) from sales where pid = %s",(pid))
+    total_sales = curr.fetchone()[0] or 0
+
+    return total_stock - total_sales
+
+def check_user_exists(email):
+    curr.execute("select * from users where email = %s",(email,))
+    user = curr.fetchone()
+    return user
+
+
+def create_user(user_details):
+    curr.execute("Insert into users(full_name,email,phone_number,password)values(%s,%s,%s,%s)",user_details)
+    conn.commit()
 

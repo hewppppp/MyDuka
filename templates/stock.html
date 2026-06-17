@@ -9,7 +9,7 @@
     <div>.
         <form action="/add_stock" method="post">
             <div>
-                <select class="form-select" aria-label="Default select example" name="pid">
+                <select class="form-select" aria-label="Default select example" name="p_id">
                     <option selected>Select a Product</option>
                     {% for product in products %}
                     <option value="{{ product[0] }}">{{ product[1] }}</option>
