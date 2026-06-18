@@ -8,7 +8,7 @@ curr.execute('Select * from products')
 
 products_data = curr.fetchall()
 
-print(products_data)
+#print(products_data)
 
 #curr.execute("Insert into products(name, buying_price, selling_price) values('fridge',89000,102000)")
 #conn.commit()
@@ -55,18 +55,18 @@ def get_data(table):
 
 
 def insert_stock(values):
-    curr.execute("insert into stock(pid,stock_quantity,created_at) values(%s,%s,%s)",values)
+    curr.execute("insert into stock(pid,stock_quantity) values(%s,%s)",values)
     conn.commit()
 
 def insert_sales(values):
-    curr.execute("insert into sales(pid, quantity, created_at) values(%s,%s,%s)", values)
+    curr.execute("insert into sales(pid, quantity) values(%s,%s)", values)
     conn.commit()
 
 
-stock_one = (1,50,"2025-09-20")
+stock_one = (1,50)
 insert_stock(stock_one)
 
-sale_one = (1, 50,"2026-01-20")
+sale_one = (1, 50)
 insert_sales(sale_one)
 
 get_stock()
